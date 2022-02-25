@@ -3,20 +3,22 @@
     <fa class="fa-bars" :icon="['fas','bars']" />
     <fa class="fa-sign-out" :icon="['fas','arrow-right-from-bracket']" />
   </header>
+  <SideNav />
 
-  <!-- <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav> -->
-
-  <!-- <router-view/> -->
+  <main>
+    <router-view/>
+  </main>
 </template>
 
 <script>
 import 'normalize.css'
+import SideNav from './components/SideNav.vue'
 
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    SideNav
+  }
 }
 
 </script>
