@@ -1,13 +1,13 @@
 <template>
 <div class="page-wrap">
     <h1 class="app-name">To Do List</h1>
-    <!-- <router-link to="/form" class="to-form">You can add task here!</router-link> -->
+    <router-link to="/form" class="to-form" v-if="taskCheck">You can add task here!</router-link>
     <div class="list-wrap">
-        <div class="list">
-            <h2 class="list-title">Programming</h2>
+        <div class="list" v-for="task in tasks" :key="task.task">
+            <h2 class="list-title">{{ task.title }}</h2>
             <div class="list-time">
                 <fa class="fa-clock" :icon="['far','clock']" />
-                <p class="list-time__text">13:00<span> – </span>16:00</p>
+                <p class="list-time__text">{{ task.start }}<span> – </span>{{ task.end }}</p>
             </div>
             <fa class="fa-pen" :icon="['fas','pen']" />
             <fa class="fa-trash" :icon="['fas','trash-can']" />
@@ -18,7 +18,20 @@
 
 <script>
 export default {
-    name: 'ListView'
+    name: 'ListView',
+    created(){
+        this.tasks = this.$store.state.tasks
+    },
+    data(){
+        return{
+            tasks: []
+        }
+    },
+    computed: {
+        taskCheck(){
+            return this.tasks.length === 0
+        }
+    }
 }
 
 </script>

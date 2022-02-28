@@ -1,9 +1,10 @@
 <template>
   <header class="header">
-    <fa class="fa-bars" :icon="['fas','bars']" />
+    <fa class="fa-bars" :icon="['fas','bars']" @click="toggleSideNav"/>
     <fa class="fa-sign-out" :icon="['fas','arrow-right-from-bracket']" />
   </header>
-  <SideNav />
+  <!--storeのstate内のsideNavの状態を取得 -->
+  <SideNav v-if="$store.state.sideNav" />
 
   <main>
     <router-view/>
@@ -13,11 +14,17 @@
 <script>
 import 'normalize.css'
 import SideNav from './components/SideNav.vue'
+// storeのactionsを参照するためにmapActions関数をimport
+import { mapActions } from 'vuex'
 
 export default {
   name: 'App',
   components: {
     SideNav
+  },
+  methods: {
+    // mapActionsでstore内のactionsのtoggleSideNavを呼び出している
+    ...mapActions(['toggleSideNav'])
   }
 }
 
