@@ -9,14 +9,17 @@
                 <fa class="fa-clock" :icon="['far','clock']" />
                 <p class="list-time__text">{{ task.start }}<span> – </span>{{ task.end }}</p>
             </div>
-            <fa class="fa-pen" :icon="['fas','pen']" />
-            <fa class="fa-trash" :icon="['fas','trash-can']" />
+            <router-link :to="{ name: 'form' ,params: {'task_id': task.id}}">
+                <fa class="fa-pen" :icon="['fas','pen']" />
+            </router-link>
+            <fa @click="deleteCheck(task.id)" class="fa-trash" :icon="['fas','trash-can']" />
         </div>
     </div>
 </div>
 </template>
 
 <script>
+import { mapActions } from "vuex"
 export default {
     name: 'ListView',
     created(){
@@ -26,6 +29,14 @@ export default {
         return{
             tasks: []
         }
+    },
+    methods: {
+        deleteCheck(id){
+            if(confirm('Do you really want to delete this task?')){
+                this.deleteTask(id)
+            }
+        },
+        ...mapActions(['deleteTask'])
     },
     computed: {
         taskCheck(){
@@ -108,6 +119,10 @@ export default {
     position: absolute;
     bottom: 14px;
     right: 14px;
+}
+
+a {
+    color: inherit;
 }
 
 </style>

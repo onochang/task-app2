@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     // mapActionsでstore内のactionsのtoggleSideNavを呼び出している
-    ...mapActions(['toggleSideNav','setLoginUser','logout','deleteLoginUser'])
+    ...mapActions(['toggleSideNav','setLoginUser','logout','deleteLoginUser','fetchTasks'])
   },
   created(){
     // 認証機能を実行
@@ -35,6 +35,7 @@ export default {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.setLoginUser(user)
+        this.fetchTasks()
       } else {
         this.deleteLoginUser()
       }

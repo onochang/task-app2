@@ -35,13 +35,32 @@ export default {
             }
         }
     },
+    created(){
+        // URLにパラメーターがない場合/formを返す
+        if(!this.$route.params.task_id){
+            return
+        }
+        // getAddressByIdにURLのパラメーターを渡して一致するtaskオブジェクトを取得
+        const task = this.$store.getters.getAddressById(this.$route.params.task_id)
+        if(task){
+            // パラメーターが一致する場合はtaskを復元
+            this.task = task
+        } else {
+            // パラメーターが一致しない場合は/listに遷移
+            this.$router.push({name: 'list'})
+        }
+    },
     methods: {
         submit(){
-            this.addTask(this.task)
+            if(this.$route.params.task_id){
+                this.updateTask({id: this.$route.params.task_id, task: this.task})
+            } else{
+                this.addTask(this.task)
+            }
             this.$router.push({name: 'list'})
             this.task = {}
         },
-        ...mapActions(['addTask'])
+        ...mapActions(['addTask','updateTask'])
     },
     computed: {
         nullCheck(){
